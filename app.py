@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request, url_for
+from database import *
 
 app = Flask(__name__)
 app.config['debug'] = True
+
+db = SQLAlchemy(app)
 
 @app.route('/', methods=["POST", "GET"])
 def index():
