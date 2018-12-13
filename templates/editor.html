@@ -27,7 +27,7 @@
         <div class="content">
             <div class="ui fluid action input focus">
                 <input type="text" id="key">
-                <button class="ui teal right labeled icon button">
+                <button id="copy" class="ui teal right labeled icon button">
                     <i class="copy icon"></i>
                     Copy
                 </button>
@@ -39,7 +39,7 @@
     <div class="ui middle aligned center grid">
         <div class="column">
             <h1 class="ui header center aligned">pasteDoc</h1>
-            <form action="/saveContent" method="POST" class="ui form">
+            <form class="ui form">
                 <div class="ui stacked segment">
                     <div class="field">
                         <button id="submit" class="ui fluid primary button">Salvar</button>
@@ -53,25 +53,36 @@
     </div>
 
 </body>
-</html>
 <script>
 $(function() {
+    /* Botão salvar */
     $('#submit').click(function(event) {
         event.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: '/saveContent',
-            data: $('form').serialize(),
-            /* success: function(data) {
-                console.log(1);
-            },
-            error: function(err) {
-                console.log(2);
-            } */
-        }).done(function(data) {
-            $('#key').val(data.key);
-            $('.ui.modal').modal("show");
-        });
+        if ($('#content').val()) {
+            $.ajax({
+                type: 'POST',
+                url: '/saveContent',
+                data: $('form').serialize(),
+                /* success: function(data) {
+                    console.log(1);
+                },
+                error: function(err) {
+                    console.log(2);
+                } */
+            }).done(function(data) {
+                $('#key').val(data.key);
+                $('.ui.modal').modal("show");
+            });
+        }
+    });
+
+    /* Botao copiar link */
+    $('#copy').click(function(event) {
+        event.preventDefault();
+        let content = $('#key');
+        content.select();
+        document.execCommand("copy");
     });
 });
 </script>
+</html>
