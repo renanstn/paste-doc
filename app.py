@@ -6,12 +6,7 @@ app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 db = SQLAlchemy(app)
 
-SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{database}".format(
-    username=config.['db']['username'],
-    password=config['db']['password'],
-    hostname=config['db']['hostname'],
-    databasename=config['db']['databasename']
-)
+SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{database}".format(username=config.['db']['username'], password=config['db']['password'], hostname=config['db']['hostname'], databasename=config['db']['databasename'])
 
 class Pastes(db.Model):
     __tablename__ ="pastes"
