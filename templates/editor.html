@@ -3,23 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
     <style>
         body {
-            height: 100%;
+            padding: 20px;
         }
         textarea {
             width: 100%;
-            height: 100vw;
+            height: 40vw;
         }
     </style>
     <title>pasteDoc</title>
 </head>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
 <body>
 
-    <form action="." method="POST">
-        <input type="submit" value="Salvar">
-        <textarea name="content" id="content" cols="200" rows="50"></textarea>
-    </form>
+    <!-- Modal onde irá aparecer o link do paste -->
+    <div class="ui small modal">
+        <div class="header">Link</div>
+        <div class="content">
+            <div class="ui fluid action input focus">
+                <input type="text" id="key">
+                <button class="ui teal right labeled icon button">
+                    <i class="copy icon"></i>
+                    Copy
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Fim da modal -->
+
+    <div class="ui middle aligned center grid">
+        <div class="column">
+            <h1 class="ui header center aligned">pasteDoc</h1>
+            <form action="/saveContent" method="POST" class="ui form">
+                <div class="ui stacked segment">
+                    <div class="field">
+                        <button id="submit" class="ui fluid primary button">Salvar</button>
+                    </div>
+                    <div class="field">
+                        <textarea name="content" id="content" rows="1">{{content}}</textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
 </body>
 </html>
+<script>
+    $(function() {
+    $('#submit').click(function(event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/saveContent',
+            data: $('form').serialize(),
+            /* success: function(data) {
+                console.log(1);
+            },
+            error: function(err) {
+                console.log(2);
+            } */
+        }).done(function(data) {
+            
+            $('#key').val(data.key);
+            $('.ui.modal').modal("show");
+        });
+    });
+});
+</script>

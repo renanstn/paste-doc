@@ -1,18 +1,50 @@
-from flask import Flask, render_template, request, url_for
-from database import *
+from flask import Flask, render_template, request, url_for, redirect, json, jsonify
+from flask_sqlalchemy import SQLAlchemy
+import configparser, uuid
 
 app = Flask(__name__)
-app.config['debug'] = True
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 db = SQLAlchemy(app)
 
-@app.route('/', methods=["POST", "GET"])
+""" SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{database}".format(
+    username=config.['db']['username'],
+    password=config['db']['password'],
+    hostname=config['db']['hostname'],
+    databasename=config['db']['databasename']
+) """
+
+class Pastes(db.Model):
+    __tablename__ ="pastes"
+    id      = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    key     = db.Column(db.String(36))
+    content = db.Column(db.Text)
+
+    def __init__(self, key, content):
+        self.key = key
+        self.content = content
+
+db.create_all()
+
+@app.route("/")
 def index():
-    if request.method == "GET":
-        return render_template("editor.html")
-    else:
-        print(request.form['content'])
-        return render_template("editor.html")
+    return render_template("editor.html")
+
+@app.route("/saveContent", methods=["POST"])
+def saveContent():
+        content = request.form.get('content')
+        key = str(generateKey())
+        paste = Pastes(key, content)
+        db.session.add(paste)
+        db.session.commit()
+        return jsonify({'sucess' : True, 'key' : key})
+
+@app.route("/<key>")
+def getPaste(key):
+    paste = Pastes.query.filter_by(key=key).first()
+    return render_template("editor.html", content=paste.content)
+
+def generateKey():
+    return uuid.uuid4()
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
