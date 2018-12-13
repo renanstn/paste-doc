@@ -29,7 +29,7 @@
                 <input type="text" id="key">
                 <button id="copy" class="ui teal right labeled icon button">
                     <i class="copy icon"></i>
-                    Copy
+                    <p id="btnText">Copy</p>
                 </button>
             </div>
         </div>
@@ -63,14 +63,8 @@ $(function() {
                 type: 'POST',
                 url: '/saveContent',
                 data: $('form').serialize(),
-                /* success: function(data) {
-                    console.log(1);
-                },
-                error: function(err) {
-                    console.log(2);
-                } */
             }).done(function(data) {
-                $('#key').val(data.key);
+                $('#key').val(window.location.href + data.key);
                 $('.ui.modal').modal("show");
             });
         }
@@ -81,13 +75,18 @@ $(function() {
         event.preventDefault();
         let content = $('#key');
         let button = $(this);
+        let btnText = $('#btnText');
+        // Copiar link para o clipboard
         content.select();
         document.execCommand("copy");
-        button.html('Copiado!');
+        // Alterar mensagem do botão
+        btnText.html('Copiado!');
+        // Alterar cor do botão
         button.removeClass('primary');
         button.addClass('green');
+        // Retornar mensagem e cor original do botão
         setTimeout(() => {
-            button.html('Copy');
+            btnText.html('Copy');
             button.removeClass('green');
             button.addClass('primary');
         }, 2000);

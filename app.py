@@ -50,5 +50,3 @@ def generateKey():
 if __name__ == '__main__':
     app.run(debug=True)
     # app.run()
-
-# TODO - Fazer com que o link apareça completo no retorno, e nao somente a key
