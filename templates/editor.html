@@ -55,7 +55,7 @@
 </body>
 </html>
 <script>
-    $(function() {
+$(function() {
     $('#submit').click(function(event) {
         event.preventDefault();
         $.ajax({
@@ -69,7 +69,6 @@
                 console.log(2);
             } */
         }).done(function(data) {
-            
             $('#key').val(data.key);
             $('.ui.modal').modal("show");
         });

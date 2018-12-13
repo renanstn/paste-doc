@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, json, jsonify
+from flask import Flask, render_template, request, url_for, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import configparser, uuid
 
@@ -26,6 +26,7 @@ class Pastes(db.Model):
 db.create_all()
 
 @app.route("/")
+@app.route("/home")
 def index():
     return render_template("editor.html")
 
