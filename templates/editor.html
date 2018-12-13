@@ -42,7 +42,7 @@
             <form class="ui form">
                 <div class="ui stacked segment">
                     <div class="field">
-                        <button id="submit" class="ui fluid primary button">Salvar</button>
+                        <button id="submit" class="ui primary fluid button">Save</button>
                     </div>
                     <div class="field">
                         <textarea name="content" id="content" rows="1">{{content}}</textarea>
@@ -80,8 +80,17 @@ $(function() {
     $('#copy').click(function(event) {
         event.preventDefault();
         let content = $('#key');
+        let button = $(this);
         content.select();
         document.execCommand("copy");
+        button.html('Copiado!');
+        button.removeClass('primary');
+        button.addClass('green');
+        setTimeout(() => {
+            button.html('Copy');
+            button.removeClass('green');
+            button.addClass('primary');
+        }, 2000);
     });
 });
 </script>
