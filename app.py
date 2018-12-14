@@ -4,14 +4,20 @@ import configparser, uuid
 
 app = Flask(__name__)
 config = configparser.ConfigParser()
-config.read("config.ini")
+config.read("/home/DocMcCoy/pasteDoc/config.ini")
+
+username = config['db']['username'],
+password = config['db']['password'],
+hostname = config['db']['hostname'],
+databasename = config['db']['databasename']
 
 # SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
-    username=config['db']['username'],
-    password=config['db']['password'],
-    hostname=config['db']['hostname'],
-    databasename=config['db']['databasename']
+    username = username,
+    password = password,
+    hostname = hostname,
+    databasename = databasename
 )
 
 db = SQLAlchemy(app)
