@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
     <style>
         body {
             padding: 20px;
@@ -15,9 +17,6 @@
     </style>
     <title>pasteDoc</title>
 </head>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 
 <body>
 
@@ -52,45 +51,45 @@
         </div>
     </div>
 
-</body>
-<script>
-$(function() {
-    /* Botão salvar */
-    $('#submit').click(function(event) {
-        event.preventDefault();
-        if ($('#content').val()) {
-            $.ajax({
-                type: 'POST',
-                url: '/saveContent',
-                data: $('form').serialize(),
-            }).done(function(data) {
-                $('#key').val(window.location.href + data.key);
-                $('.ui.modal').modal("show");
-            });
-        }
-    });
+    <script>
+    $(function() {
+        /* Botão salvar */
+        $('#submit').click(function(event) {
+            event.preventDefault();
+            if ($('#content').val()) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/saveContent',
+                    data: $('form').serialize(),
+                }).done(function(data) {
+                    $('#key').val(window.location.href + data.key);
+                    $('.ui.modal').modal("show");
+                });
+            }
+        });
 
-    /* Botao copiar link */
-    $('#copy').click(function(event) {
-        event.preventDefault();
-        let content = $('#key');
-        let button = $(this);
-        let btnText = $('#btnText');
-        // Copiar link para o clipboard
-        content.select();
-        document.execCommand("copy");
-        // Alterar mensagem do botão
-        btnText.html('Copiado!');
-        // Alterar cor do botão
-        button.removeClass('primary');
-        button.addClass('green');
-        // Retornar mensagem e cor original do botão
-        setTimeout(() => {
-            btnText.html('Copy');
-            button.removeClass('green');
-            button.addClass('primary');
-        }, 2000);
+        /* Botao copiar link */
+        $('#copy').click(function(event) {
+            event.preventDefault();
+            let content = $('#key');
+            let button = $(this);
+            let btnText = $('#btnText');
+            // Copiar link para o clipboard
+            content.select();
+            document.execCommand("copy");
+            // Alterar mensagem do botão
+            btnText.html('Copiado!');
+            // Alterar cor do botão
+            button.removeClass('primary');
+            button.addClass('green');
+            // Retornar mensagem e cor original do botão
+            setTimeout(() => {
+                btnText.html('Copy');
+                button.removeClass('green');
+                button.addClass('primary');
+            }, 2000);
+        });
     });
-});
-</script>
+    </script>
+</body>
 </html>
