@@ -3,10 +3,18 @@ from flask_sqlalchemy import SQLAlchemy
 import configparser, uuid
 
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-db = SQLAlchemy(app)
+config = configparser.ConfigParser()
+config.read("config.ini")
 
-SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{database}".format(username=config.['db']['username'], password=config['db']['password'], hostname=config['db']['hostname'], databasename=config['db']['databasename'])
+# SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite'
+SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
+    username=config['db']['username'],
+    password=config['db']['password'],
+    hostname=config['db']['hostname'],
+    databasename=config['db']['databasename']
+)
+
+db = SQLAlchemy(app)
 
 class Pastes(db.Model):
     __tablename__ ="pastes"
