@@ -7,10 +7,10 @@ config = configparser.ConfigParser()
 path = os.path.dirname(os.path.abspath(__file__))
 config.read(path + "/config.ini")
 
-username = config['db']['username'],
-password = config['db']['password'],
-hostname = config['db']['hostname'],
-databasename = config['db']['databasename']
+username = config.get('db', 'username')
+password = config.get('db', 'password')
+hostname = config.get('db', 'hostname')
+databasename = config.get('db', 'databasename')
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
