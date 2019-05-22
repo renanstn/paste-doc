@@ -1,8 +1,8 @@
-Click==7.0
-Flask==1.0.2
-Flask-SQLAlchemy==2.3.2
-itsdangerous==1.1.0
+Click
+Flask
+Flask-SQLAlchemy
+itsdangerous
 Jinja2
-MarkupSafe==1.1.0
-SQLAlchemy==1.2.14
-Werkzeug==0.14.1
+MarkupSafe
+SQLAlchemy
+Werkzeug
