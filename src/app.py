@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, url_for, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import configparser, uuid, os
 
+
 app = Flask(__name__)
 config = configparser.ConfigParser()
 path = os.path.dirname(os.path.abspath(__file__))
@@ -12,9 +13,15 @@ password = config.get('db', 'password')
 hostname = config.get('db', 'hostname')
 databasename = config.get('db', 'databasename')
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+# app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
+#     username = username,
+#     password = password,
+#     hostname = hostname,
+#     databasename = databasename
+# )
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres+psycopg2://{username}:{password}@{hostname}/{databasename}".format(
     username = username,
     password = password,
     hostname = hostname,

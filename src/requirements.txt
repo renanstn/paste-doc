@@ -6,3 +6,4 @@ Jinja2
 MarkupSafe
 SQLAlchemy
 Werkzeug
+psycopg2-binary
