@@ -8,10 +8,12 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
 DATABASE_URL = os.getenv('DATABASE_URL')
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 
 db = SQLAlchemy(app)
+
 
 class Pastes(db.Model):
     __tablename__ ="pastes"
@@ -23,7 +25,9 @@ class Pastes(db.Model):
         self.key = key
         self.content = content
 
+
 db.create_all()
+
 
 @app.route("/")
 @app.route("/home")
@@ -49,4 +53,5 @@ def generateKey():
 
 if __name__ == '__main__':
     # app.run(debug=True)
-    app.run()
+    port = os.getenv('PORT', 5000)
+    app.run(host='0.0.0.0', port=port)
