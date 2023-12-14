@@ -25,8 +25,8 @@ class Pastes(db.Model):
         self.key = key
         self.content = content
 
-
-db.create_all()
+with app.app_context():
+    db.create_all()
 
 
 @app.route("/")
