@@ -19,3 +19,4 @@ services:
       - "5000:5000"
     environment:
       - DATABASE_URL=postgresql://postgres:admin@db:5432/database
+      - PORT=5000
