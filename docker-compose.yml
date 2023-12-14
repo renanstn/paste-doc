@@ -2,18 +2,20 @@ version: '3.1'
 
 services:
 
-  app:
-    build: ./src
-    depends_on: 
-      - db
-    volumes: 
-      - ./src:/usr/src/app
-
   db:
     image: postgres
     restart: always
     environment:
         POSTGRES_PASSWORD: admin
         POSTGRES_DB: database
-    ports: 
-        - 5432:5432
+
+  app:
+    build: .
+    depends_on:
+      - db
+    volumes:
+      - ./src:/app
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:admin@db:5432/database
