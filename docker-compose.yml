@@ -6,8 +6,8 @@ services:
     image: postgres
     restart: always
     environment:
-        POSTGRES_PASSWORD: admin
-        POSTGRES_DB: database
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: database
 
   app:
     build: .
